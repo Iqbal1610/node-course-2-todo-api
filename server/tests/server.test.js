@@ -1,12 +1,15 @@
 const expect = require('expect');
 const request = require('supertest');
+const{ObjectId}=require('mongodb');
 
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
 // dummy data for testing Get method
 const todos=[{
+  _id:new ObjectId(),
   text:'First test todo'
 },{
+    _id:new ObjectId(),
   text:'2nd test todo'
 }];
 
@@ -21,7 +24,7 @@ beforeEach((done) => {
 describe('POST /todos', () => {
   it('should create a new todo', (done) => {
     var text = 'Test todo text';
-
+//use super test method
     request(app)
       .post('/todos')
       .send({text})
@@ -43,6 +46,8 @@ describe('POST /todos', () => {
   });
 
   it('should not create todo with invalid body data', (done) => {
+
+//use super test method
     request(app)
       .post('/todos')
       .send({})
@@ -59,9 +64,11 @@ describe('POST /todos', () => {
       });
   });
 });
-
+// GET TEST
 describe('GET/todos',()=>{
   it('should get all todos',(done)=>{
+
+//use super test method
     request(app)
     .get('/todos')
     .expect(200)
@@ -69,5 +76,39 @@ describe('GET/todos',()=>{
       expect(res.body.todos.length).toBe(2);
     })
     .end(done);
-  })
-})
+  });
+});
+
+//GET/todos:id testing
+
+describe('GET/todos/:id',()=>{
+  it('should return todo doc',(done)=>{
+
+//use super test method
+    request(app)
+    .get(`/todos/${todos[0]._id.toHexString()}`)  //toHexString function used for converting the id to string
+    .expect(200)
+    .expect((res)=>{
+      expect(res.body.todo.text).toBe(todos[0].text);// here todo comes from server.js as object see server.js
+    })
+    .end(done);
+  });
+
+  it('should return a 404 if todo not found',(done)=>{
+     var hexId= new ObjectId().toHexString();
+
+     request(app)
+     .get(`/todos/$ {hexId}`)
+     .expect(404)
+     .end(done);
+  });
+
+  it('should return 404 for non-object ids',(done)=>{
+
+      request(app)
+      .get('/todos/123abc')
+      .expect(404)
+      .end(done);
+
+  });
+});
