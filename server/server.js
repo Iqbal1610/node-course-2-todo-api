@@ -10,6 +10,10 @@ var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
 var app = express();
+ // for herku ur
+
+ const port=process.env.PORT || 3000;
+
 
 app.use(bodyParser.json());
 // for post data
@@ -55,8 +59,8 @@ res.send({todo});// this object todo used in //GET/todos:id testing secttion
 })
 });
 
-app.listen(3000, () => {
-  console.log('Started on port 3000');
+app.listen(port, () => {
+  console.log(`Started on port ${port}` );
 });
 
 
