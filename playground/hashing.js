@@ -4,16 +4,30 @@ const {SHA256}=require('crypto-js');
 
 const jwt=require('jsonwebtoken');
 
-var data={
-  id:10
-};
+const bcrypt=require('bcryptjs');
 
-var token=jwt.sign(data,'123abc');
-console.log(token);
+var password='123abc!';
+ // bcrypt.genSalt(10,(err,salt)=>{//here 10 is number of round
+ //   bcrypt.hash(password,salt,(err,hash)=>{
+ //     console.log(hash);
+ //   });
+ // });
 
-var decoded=jwt.verify(token,'123abc');
+ var hashedPassword='$2a$10$tG04ybaQ8picT9F8w.ZmqOp4jKxe1U3JSo6SxLRfxRKvW5QALWamG';
 
-console.log('decoded',decoded);
+ bcrypt.compare(password,hashedPassword,(err,res)=>{
+   console.log(res);
+ });
+// var data={
+//   id:10
+// };
+//
+// var token=jwt.sign(data,'123abc');
+// console.log(token);
+//
+// var decoded=jwt.verify(token,'123abc');
+//
+// console.log('decoded',decoded);
 
 
 
