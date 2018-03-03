@@ -18,6 +18,15 @@ var password='123abc!';
  bcrypt.compare(password,hashedPassword,(err,res)=>{
    console.log(res);
  });
+
+
+
+
+
+
+
+
+
 // var data={
 //   id:10
 // };
@@ -28,10 +37,10 @@ var password='123abc!';
 // var decoded=jwt.verify(token,'123abc');
 //
 // console.log('decoded',decoded);
-
-
-
-//**********Manual token setting
+//
+//
+//
+// **********Manual token setting
 // var message='I am user number 3';
 //
 // var hash=SHA256(message).toString();
@@ -60,4 +69,4 @@ var password='123abc!';
 //   console.log('Data was not changed');
 // }else {
 //   console.log('Data was changed.Dont trust');
-//}
+// }
