@@ -111,7 +111,7 @@ app.post('/users', (req, res) => {
   })
 });
 
-app.get('/users/me', authenticate, (req, res) => {
+app.get('/users/me', authenticate, (req, res) => {/// authenticate is middleware here
   res.send(req.user);
 });
 
@@ -128,6 +128,13 @@ app.post('/users/login',(req,res)=>{
   });
 });
 
+app.delete('/users/me/token',authenticate,(req,res)=>{//authenticate is middleware here
+  req.user.removeToken(req.token).then(()=>{
+    res.status(200).send();
+  },()=>{
+    res.status(400).send();
+  });
+});
 
 
 app.listen(port, () => {
